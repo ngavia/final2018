@@ -1,7 +1,7 @@
 ---
 title: "Abacavirinol"
 author: "Natalie Gavia"
-date: "put the date here"
+date: "December 5, 2018"
 output: html_document
 ---
 
@@ -13,19 +13,19 @@ Female <- filter(abac,sex=="F")
 Male  <- filter(abac,sex=="M")
 Druggies <- filter(abac,Ivdrug=="M")
 DruggiesUse <- filter(abac,Ivdrug== "user")
+LBGT <- filter(abac,LBGT=="yes")
 ```
 
-# Introduction
+# Introduction 
 
 <!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?.  If you skimp in this section expect to be marked down in your grade. Paint a picture of the project a couple of paragraphs is expected!-->
 
-A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. Finish this! ADD BALONY
+A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. Finish this! ADD B
 
 # Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!--> 
-How to make a sub set?? --> Dplier?
-Make seperate graphs (seperately from men and women) DONT FORGET DUMBASS Another serperate data group for IV users, LGBT groups and general population???
+For each variable, we will make seperate data results for Graphical, Numerical, and Inferential results. The methods that we'll be using for each one would be barchartGC, colPerc and rowPerc, chisqtestGC and fisher.test.
 
 ```{r}
 lbgtGrp <- filter(abac, LBGT == "yes")
@@ -52,6 +52,8 @@ infectedgrp <- filter(abac, infected == "none")
 
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
 
+The results are categorized into three sections; Graphical, NUmerical, and Inferential results.
+
 ## Descriptive Results
 
 ### Graphical Descriptive Results
@@ -73,12 +75,27 @@ barchartGC(results, type ==  "percent")
 
 ```
 
+Female
+```{r}
+femaleresults <- xtabs(~infected+treatment, data=Female)
+barchartGC(femaleresults, type ==  "percent")
+
+```
+
+Male
+```{r}
+maleresults <- xtabs(~infected+treatment, data=Male)
+barchartGC(maleresults, type ==  "percent")
+
+```
+
+
 
 LGBT Graph
 
 ```{r}
-results <- xtabs(~LBGT, data=abac)
-barchartGC(results, type ==  "percent")
+lbgtresults <- xtabs(~infected+treatment, data=LBGT)
+barchartGC(lbgtresults, type ==  "percent")
 
 ```
 
@@ -93,30 +110,79 @@ In the first bar graph, those that got aids were those that took the placebo. Wh
 
 
 
+
+
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
+Every Participant
+
+
 From the data above, it shows that those had the placebo has a higher change of contracting aids. Since The placebo group had a 1.5% high. Potentally making the effects of the real drug working.
+
+Female and Male
+```{r}
+colPerc(femaleresults)
+rowPerc(femaleresults)
+```
+
+```{r}
+colPerc(maleresults)
+rowPerc(maleresults)
+```
+
+
+Drug Users
+
 
 ```{r}
 colPerc(druggiesusersresults)
 rowPerc(druggiesusersresults)
 ```
 
+
+LBGT 
+
+```{r}
+colPerc(lbgtresults)
+rowPerc(lbgtresults)
+```
+
+
 ## Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
+Every Participant
 
 
 The null hypothesis is rejcted since the P value is low. This means that the drug is working, backed up by the 
 
-
-
-
 From the Fricher test, it seems that by taking the drug, you have a less likely chance of getting aids. This is justified by the Drugs odds ratio, which is 0.7181794
 
+Female and Male
+
+```{r}
+chisqtestGC(femaleresults, graph = TRUE)
+```
+```{r}
+fisher.test(femaleresults)
+```
+
+Male
+
+```{r}
+chisqtestGC(maleresults, graph = TRUE)
+```
+```{r}
+fisher.test(maleresults)
+```
+
+
+
+
+DrugUsers
 
 ```{r}
 chisqtestGC(druggiesusersresults, graph = TRUE)
@@ -125,6 +191,16 @@ chisqtestGC(druggiesusersresults, graph = TRUE)
 fisher.test(druggiesusersresults)
 ```
 
+
+
+LBGT
+```{r}
+chisqtestGC(lbgtresults, graph = TRUE)
+```
+
+```{r}
+fisher.test(lbgtresults)
+```
 
 
 # Discussion and Conclusion
