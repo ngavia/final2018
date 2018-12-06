@@ -61,19 +61,15 @@ The results are categorized into three sections; Graphical, NUmerical, and Infer
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
 
 
+Every Participant
 ```{r}
 results <- xtabs(~infected+treatment, data=abac)
 barchartGC(results, type ==  "percent")
 
 ```
+The graph above displays every participant that took the drug and the placebo. From the data, it appears that those that took the placebo had a higher chance of contracting the virus that those that took the drug. This indicates that the drug is actually working since those that took the drug had a lesser chance of contracting the virus.
 
 
-Female and Male Graph
-```{r}
-results <- xtabs(~sex, data=abac)
-barchartGC(results, type ==  "percent")
-
-```
 
 Female
 ```{r}
@@ -82,6 +78,9 @@ barchartGC(femaleresults, type ==  "percent")
 
 ```
 
+The graph above shows women taking the placebo and the drug. As seen in the graph, it appears that those that took the  drug contracted aids than those that took the placebo.However, it shows it was only a slight difference.
+
+
 Male
 ```{r}
 maleresults <- xtabs(~infected+treatment, data=Male)
@@ -89,7 +88,7 @@ barchartGC(maleresults, type ==  "percent")
 
 ```
 
-
+The graph above shows males taking the drug and the placebo. Those that took the placebo had a higher risk factor of getting infected with aids comapred to those that took the drug.
 
 LGBT Graph
 
@@ -98,6 +97,9 @@ lbgtresults <- xtabs(~infected+treatment, data=LBGT)
 barchartGC(lbgtresults, type ==  "percent")
 
 ```
+The graph above shows the LGBT community taking the drug and placebo. In this group, it appears that those that took the drug ended up having higher chances of contracting aids than those that took the placebo. This data results is odd since other variables, such as gende and drug users justifies that the drug is working. There must be some outside factor affecting this group.
+
+
 
 Druggies
 ```{r}
@@ -117,7 +119,10 @@ In the first bar graph, those that got aids were those that took the placebo. Wh
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 Every Participant
-
+```{r}
+colPerc(results)
+rowPerc(results)
+```
 
 From the data above, it shows that those had the placebo has a higher change of contracting aids. Since The placebo group had a 1.5% high. Potentally making the effects of the real drug working.
 
@@ -126,20 +131,22 @@ Female and Male
 colPerc(femaleresults)
 rowPerc(femaleresults)
 ```
+From the colPerc data, it appears that females that took the drug had a 1.1 percent of getting aids than those that took the placebo.
 
 ```{r}
 colPerc(maleresults)
 rowPerc(maleresults)
 ```
-
+In the data results for males, it shows that those that took the placebo had a 4.78 percent chance of getting aids than those that took the medication. Justifiying that the drug works effectively for males.
 
 Drug Users
-
 
 ```{r}
 colPerc(druggiesusersresults)
 rowPerc(druggiesusersresults)
 ```
+
+The colPerc above shows Drug users thathad the placebo had a 4.23 percent chance higher of getting aids than those that took the drug. This can suggest that the drug is efective for this ggroup of vairables. 
 
 
 LBGT 
@@ -148,7 +155,7 @@ LBGT
 colPerc(lbgtresults)
 rowPerc(lbgtresults)
 ```
-
+In the colPerc above, it appears that those that took the drug had a 3.45 percent chance of contracting aids than those that took the placebo.
 
 ## Inferential Results
 
@@ -157,8 +164,16 @@ rowPerc(lbgtresults)
 Every Participant
 
 
-The null hypothesis is rejcted since the P value is low. This means that the drug is working, backed up by the 
+```{r}
+chisqtestGC(results, graph = TRUE)
+```
+```{r}
+fisher.test(results)
+```
 
+
+
+The null hypothesis is rejcted since the P value is low. This means that the drug is working, backed up by the P value only being 0.01634.
 From the Fricher test, it seems that by taking the drug, you have a less likely chance of getting aids. This is justified by the Drugs odds ratio, which is 0.7181794
 
 Female and Male
@@ -170,6 +185,8 @@ chisqtestGC(femaleresults, graph = TRUE)
 fisher.test(femaleresults)
 ```
 
+We reject the null hypothesis since the p value is 0.04911 ( below 0.05)
+
 Male
 
 ```{r}
@@ -179,7 +196,7 @@ chisqtestGC(maleresults, graph = TRUE)
 fisher.test(maleresults)
 ```
 
-
+We would reject the null hypothesis since the p-value was below 0.05. Specifically it was 0.000004352.
 
 
 DrugUsers
@@ -190,7 +207,7 @@ chisqtestGC(druggiesusersresults, graph = TRUE)
 ```{r}
 fisher.test(druggiesusersresults)
 ```
-
+We reject the null hypothesis here since the p-value was 0.01929, which is below 0.05.
 
 
 LBGT
@@ -202,7 +219,12 @@ chisqtestGC(lbgtresults, graph = TRUE)
 fisher.test(lbgtresults)
 ```
 
+We accept the null hypothesis here since the p-value was 0.05698.
+
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+Two out of the four variables, explayed excellent results of the drug working. Those groups were the Drug users and Males, both demonstrating an overall effectiveness of the medication by having a lesser chance of contracting aids. The other variables, Females and the LGBT community had the opposite effect for them. Throughout each dataset, it appears that the medication did not work out as well as the Drug users/Males. But rather increased the proability of getting aids. There must be some outside factor that influences both Females and the LGBT community of getting aids through the medication. 
+
